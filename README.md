@@ -1,6 +1,7 @@
 # Laravel Process Relations
 
-With this library you can work with relations through the API for attributes. 
+With this library you can work with relations through the API for attributes.
+To make a relationship, you only need to assign a value (or values in case of mass assignment) to model and create/save it.
 For now the following relation types are supported: BelongsTo, BelongsToMany, HasOne, HasMany.
 
 # Examples
