@@ -1,0 +1,38 @@
+{
+    "name": "masterfri/laravel-process-relations",
+    "type": "library",
+    "description": "Process ",
+    "keywords": [
+        "eloquent",
+        "relations",
+        "laravel"
+    ],
+    "authors": [
+        {
+            "name": "Grigory Ponomar",
+            "email": "masterfri@gmail.com",
+            "homepage": "http://masterfri.org.ua"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1.0",
+        "illuminate/database": "~5.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.0",
+        "orchestra/database": "~3.6",
+        "orchestra/testbench": "~3.7"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Masterfri\\ProcessRelations\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaravelProcessRelations\\Tests\\": "tests/"
+        }
+    }
+}
