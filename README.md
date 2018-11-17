@@ -1,6 +1,6 @@
 # Laravel Process Relations
 
-With this library you can work with relations through the same API as for attributes. 
+With this library you can work with relations through the API for attributes. 
 For now the following relation types are supported: BelongsTo, BelongsToMany, HasOne, HasMany.
 
 # Examples
