@@ -1,7 +1,7 @@
 {
-    "name": "masterfri/laravel-process-relations",
+    "name": "masterfri/laravel-smart-relations",
     "type": "library",
-    "description": "Process ",
+    "description": "Work with relations as simple as with attributes.",
     "keywords": [
         "eloquent",
         "relations",
@@ -27,12 +27,12 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "Masterfri\\ProcessRelations\\": "src/"
+            "Masterfri\\SmartRelations\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "LaravelProcessRelations\\Tests\\": "tests/"
+            "Masterfri\\SmartRelations\\Tests\\": "tests/"
         }
     }
 }

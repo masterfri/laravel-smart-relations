@@ -10,7 +10,7 @@
 	processIsolation="false"
 	stopOnFailure="true">
   <testsuites>
-	<testsuite name="Can Process Relations Test Suite">
+	<testsuite name="Smart Relations Test Suite">
 	  <directory suffix=".php">./tests/</directory>
 	</testsuite>
   </testsuites>

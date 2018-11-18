@@ -1,6 +1,6 @@
 <?php
 
-namespace Masterfri\ProcessRelations\Eloquent\Concerns;
+namespace Masterfri\SmartRelations;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Support\Str;
 use LogicException;
 
-trait CanProcessRelations
+trait SmartRelations
 {
     /**
      * @var array
@@ -25,7 +25,7 @@ trait CanProcessRelations
      */ 
     // protected $cascade_delete = [];
     
-    public static function bootCanProcessRelations()
+    public static function bootSmartRelations()
     {
         static::saved(function ($model) {
             $model->savePendingRelations();

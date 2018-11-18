@@ -1,13 +1,13 @@
 <?php
 
-namespace LaravelProcessRelations\Tests\Models;
+namespace Masterfri\SmartRelations\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Masterfri\ProcessRelations\Eloquent\Concerns\CanProcessRelations;
+use Masterfri\SmartRelations\SmartRelations;
 
 class Reader extends Model
 {
-    use CanProcessRelations;
+    use SmartRelations;
     
     public $timestamps = false;
     

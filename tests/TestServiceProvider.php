@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelProcessRelations\Tests;
+namespace Masterfri\SmartRelations\Tests;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 

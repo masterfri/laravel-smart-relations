@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelProcessRelations\Tests;
+namespace Masterfri\SmartRelations\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
 

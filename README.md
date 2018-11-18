@@ -1,19 +1,17 @@
-# Laravel Process Relations
+# Laravel Smart Relations
 
-With this library you can work with relations through the API for attributes.
+This library allow to work with relations using the same API as they were attributes.
 To make a relationship, you only need to assign a value (or values in case of mass assignment) to model and create/save it.
 For now the following relation types are supported: BelongsTo, BelongsToMany, HasOne, HasMany.
 
 # Examples
 
 ```php
-<?php
-
-use Masterfri\ProcessRelations\Eloquent\Concerns\CanProcessRelations;
+use Masterfri\SmartRelations\SmartRelations;
 
 class Library extends Model
 {
-    use CanProcessRelations;
+    use SmartRelations;
     
     // Relations can be listed in $fillable property to enable mass assignment
     protected $fillable = ['name', 'books', 'readers'];
@@ -35,7 +33,7 @@ class Library extends Model
 
 class Book extends Model
 {
-    use CanProcessRelations;
+    use SmartRelations;
     
     protected $fillable = ['title', 'library'];
     
@@ -43,17 +41,39 @@ class Book extends Model
     {
         return $this->belongsTo(Library::class);
     }
+    
+    public function card()
+    {
+        return $this->hasOne(BookCard::class);
+    }
 }
 
 class Reader extends Model
 {
-    use CanProcessRelations;
+    use SmartRelations;
     
     protected $fillable = ['name'];
 }
 
-..............
+class BookCard extends Model
+{
+    use SmartRelations;
+    
+    protected $fillable = ['book', 'reader'];
+    
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
+    
+    public function reader()
+    {
+        return $this->belongsTo(Reader::class);
+    }
+}
 
+// HasMany relation example
+// =========================
 $library = Library::create([
     'name' => 'Central Library',
     // Related records can be passed as array or model instance
@@ -66,16 +86,42 @@ $library = Library::create([
         123,
     ],
 ]);
+// or 
+$library->books = [
+    ['title' => 'First Book'], 
+    new Book(['title' => 'Second Book']),
+    $existingBook,
+    123,
+];
+$library->save();
 
+// HasOne relation example
+// =========================
+$book = Book::create([
+    'title' => 'Third book',
+    'card' => new BookCard(),
+    // or simply
+    // 'card' => [],
+]);
+
+// BelongsTo relation example
+// =========================
 $book = Book::create([
     'title' => 'Third book',
     // In that way model can be associated with parent record
     'library' => $library,
 ]);
+// or
+$book->library = $library;
+$book->save();
 
+// BelongsToMany relation example
+// =========================
 $reader1 = Reader::create(['name' => 'John']);
 $reader2 = Reader::create(['name' => 'Jack']);
 
 // In case of many to many relation you can pass model instance/ID to make relationship 
 $library->readers = [$reader1, $reader2->id];
 $library->save();
+
+

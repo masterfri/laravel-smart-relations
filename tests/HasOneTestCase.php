@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelProcessRelations\Tests;
+namespace Masterfri\SmartRelations\Tests;
 
 class HasOneTestCase extends TestCase
 {
