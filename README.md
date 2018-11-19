@@ -4,6 +4,10 @@ This library allows to work with relations in the way as if they were attributes
 To make a relationship, you only need to assign a value (or values in case of mass assignment) to model and create/save it.
 For now the following relation types are supported: BelongsTo, BelongsToMany, HasOne, HasMany.
 
+# Installation
+
+`composer require masterfri/laravel-smart-relations`
+
 # Examples
 
 ```php
