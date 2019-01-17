@@ -84,8 +84,9 @@ class BelongsToManyCase extends TestCase
         
         $reader1->delete();
         
-        $library = $library->fresh();
-        
-        $this->assertEquals(1, $library->readers->count());
+        $this->assertDatabaseMissing('subscriptions', [
+            'library_id' => $library->id,
+            'reader_id' => $reader1->id,
+        ]);
     }
 }
