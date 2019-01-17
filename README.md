@@ -1,8 +1,12 @@
 # Laravel Smart Relations
 
-This library allow to work with relations using the same API as they were attributes.
+This library allows to work with relations in the way as if they were attributes.
 To make a relationship, you only need to assign a value (or values in case of mass assignment) to model and create/save it.
 For now the following relation types are supported: BelongsTo, BelongsToMany, HasOne, HasMany.
+
+# Installation
+
+`composer require masterfri/laravel-smart-relations`
 
 # Examples
 
@@ -11,13 +15,17 @@ use Masterfri\SmartRelations\SmartRelations;
 
 class Library extends Model
 {
+    // To enable smart relations add the following trait in your model
     use SmartRelations;
     
     // Relations can be listed in $fillable property to enable mass assignment
     protected $fillable = ['name', 'books', 'readers'];
     
-    // Relations can be listed in $cascade_delete property, 
-    // so related records will be deleted/detached when parent record gets deleted
+    // If you want children records to be deleted along with parent record
+    // you can list required relation names in $cascade_delete property.
+    // For example, when library instance is deleted all related books
+    // will be deleted as well, and readers will be detached (not deleted, since 
+    // it is BelongsToMany relationship)
     protected $cascade_delete = ['books', 'readers'];
     
     public function books()
@@ -124,4 +132,13 @@ $reader2 = Reader::create(['name' => 'Jack']);
 $library->readers = [$reader1, $reader2->id];
 $library->save();
 
-
+// Update data on related records
+// =========================
+// If you pass primary key in the data, related records will be loaded
+// from database, and their attributes will be updated. But bear in mind
+// that related records which are not listed in the array will be deleted,
+// because all children records will be replaced with new data.
+$library->books = [
+    ['id' => 1, 'title' => 'First Book New Name'], 
+    ['id' => 2, 'title' => 'Second Book New Name'], 
+];
