@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Masterfri\SmartRelations\Exception\MalformedDataException;
 use Masterfri\SmartRelations\Exception\IntegrityException;
+use Illuminate\Support\Arr;
 
-trait ConvertToModel
+trait MorphToModel
 {
     use CheckNull;
     
@@ -29,51 +30,37 @@ trait ConvertToModel
             return $value;
         }
         
-        if (is_array($value)) {
-            return $this->createFromArray($relation, $value);
-        }
-        
-        if (is_scalar($value)) {
-            return $this->findByPk($relation, $value);
+        if (is_array($value) && Arr::has($value, ['id', 'type'])
+            && is_scalar($value['id']) && is_string($value['type'])) {
+            return $this->findByPk($value['id'], $value['type']);
         }
         
         throw new MalformedDataException('Unexpected data format');
     }
     
     /**
-     * Create model instance from array
-     * 
-     * @param Relation $relation
-     * @param array $value
-     * 
-     * @return Model
-     */ 
-    protected function createFromArray(Relation $relation, array $value)
-    {
-        $related = $relation->getRelated();
-        $pk = $related->getKeyName();
-        
-        if (isset($value[$pk])) {
-            $instance = $this->findByPk($relation, $value[$pk]);
-            $instance->fill($value);
-        } else {
-            $instance = $related->newInstance($value);
-        }
-        
-        return $instance;
-    }
-    
-    /**
      * Retrieve model by its primary key
      * 
-     * @param Relation $relation
-     * @param int|string $pk
+     * @param array $pk
+     * @param string $type
      * 
      * @return Model|null
      */ 
-    protected function findByPk(Relation $relation, $pk)
+    protected function findByPk($pk, $type)
     {
-        $model = $relation->getRelated()->find($pk);
+        $class = Relation::getMorphedModel($type);
+        
+        if ($class === null) {
+            if (is_subclass_of($type, Model::class)) {
+                $class = $type;
+            } else {
+                throw new MalformedDataException(
+                    sprintf('Type %s is not mapped to any known model class', $type)
+                );
+            }
+        }
+        
+        $model = $class::find($pk);
         
         if ($model === null) {
             throw new IntegrityException(

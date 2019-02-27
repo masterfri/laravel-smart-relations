@@ -11,12 +11,27 @@ class Reader extends Model
     
     public $timestamps = false;
     
-    protected $fillable = ['name', 'subscriptions'];
+    protected $fillable = ['name', 'subscriptions', 'rating', 'reviews', 'tags'];
     
-    protected $cascade_delete = ['subscriptions'];
+    protected $cascade_delete = ['subscriptions', 'rating', 'reviews', 'tags'];
     
     public function subscriptions()
     {
         return $this->belongsToMany(Library::class, 'subscriptions');
+    }
+    
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'subject');
+    }
+    
+    public function rating()
+    {
+        return $this->morphOne(Rating::class, 'subject');
+    }
+    
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 }

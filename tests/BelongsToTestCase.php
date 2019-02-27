@@ -17,11 +17,32 @@ class BelongsToTestCase extends TestCase
         
         Models\Book::create([
             'title' => 'Second book',
-            'library' => $library,
+            'library' => $library->id,
         ]);
         
         $library = $library->fresh();
         
         $this->assertCount(2, $library->books);
+    }
+    
+    public function testCanUnsetRelation()
+    {
+        $library = Models\Library::create([
+            'name' => 'Central Library',
+        ]);
+        
+        $book = Models\Book::create([
+            'title' => 'First book',
+            'library' => $library,
+        ]);
+        
+        $this->assertCount(1, $library->books);
+        
+        $book->library = '';
+        $book->save();
+        
+        $library = $library->fresh();
+        
+        $this->assertCount(0, $library->books);
     }
 }

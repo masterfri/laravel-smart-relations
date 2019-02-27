@@ -11,9 +11,9 @@ class Library extends Model
     
     public $timestamps = false;
     
-    protected $fillable = ['name', 'books', 'readers'];
+    protected $fillable = ['name', 'books', 'readers', 'rating', 'reviews', 'tags'];
     
-    protected $cascade_delete = ['books', 'readers'];
+    protected $cascade_delete = ['books', 'readers', 'rating', 'reviews', 'tags'];
     
     public function books()
     {
@@ -23,5 +23,20 @@ class Library extends Model
     public function readers()
     {
         return $this->belongsToMany(Reader::class, 'subscriptions');
+    }
+    
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'subject');
+    }
+    
+    public function rating()
+    {
+        return $this->morphOne(Rating::class, 'subject');
+    }
+    
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 }

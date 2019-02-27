@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use LogicException;
 use ReflectionClass;
 
@@ -22,6 +26,10 @@ class RelationsManager
         BelongsToMany::class => Processor\BelongsToMany::class,
         HasOne::class => Processor\HasOne::class,
         HasMany::class => Processor\HasMany::class,
+        MorphTo::class => Processor\MorphTo::class,
+        MorphOne::class => Processor\HasOne::class,
+        MorphMany::class => Processor\HasMany::class,
+        MorphToMany::class => Processor\BelongsToMany::class,
     ];
     
     /**

@@ -2,10 +2,7 @@
 
 namespace Masterfri\SmartRelations\Processor;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Masterfri\SmartRelations\Contracts\Processor;
-use LogicException;
 
 class BelongsToMany extends AbstractProcessor implements Processor
 {
